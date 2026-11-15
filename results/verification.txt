@@ -1,0 +1,91 @@
+$ gcc -Wall -Wextra -Wpedantic -Werror baseline.c -o /tmp/tmp0s89nbj3/baseline -lm
+
+$ /tmp/tmp0s89nbj3/baseline --self-test
+PASS: empty data, zero radius, inclusive radius and skill boundaries, unavailable and no-match cases
+
+$ /tmp/tmp0s89nbj3/baseline -1
+Usage: /tmp/tmp0s89nbj3/baseline [profiles [queries [repeats [--counts]]]] | --self-test
+
+$ /tmp/tmp0s89nbj3/baseline 2 0
+Usage: /tmp/tmp0s89nbj3/baseline [profiles [queries [repeats [--counts]]]] | --self-test
+
+$ /tmp/tmp0s89nbj3/baseline bogus
+Usage: /tmp/tmp0s89nbj3/baseline [profiles [queries [repeats [--counts]]]] | --self-test
+
+$ /tmp/tmp0s89nbj3/baseline 1 1 0
+Usage: /tmp/tmp0s89nbj3/baseline [profiles [queries [repeats [--counts]]]] | --self-test
+
+$ gcc -Wall -Wextra -Werror -O2 baseline.c memory_check.c -Wl,--wrap=malloc,--wrap=free -o /tmp/tmp0s89nbj3/baseline -lm
+
+$ /tmp/tmp0s89nbj3/baseline --self-test
+PASS: empty data, zero radius, inclusive radius and skill boundaries, unavailable and no-match cases
+memory-check: allocations=6 frees=6 live=0
+
+$ /tmp/tmp0s89nbj3/baseline 10000 200 1
+{"version":"baseline","profiles":10000,"queries":200,"repeats":1,"setup_seconds":0.001168614,"search_seconds":0.016673728,"checksum":8122,"profile_bytes":400000,"profile_allocations":10000}
+memory-check: allocations=10001 frees=10001 live=0
+
+$ /tmp/tmp0s89nbj3/baseline 100 2 1
+queries: Success
+memory-check: allocations=0 frees=0 live=0
+
+$ /tmp/tmp0s89nbj3/baseline 100 2 1
+Profile allocation failed
+memory-check: allocations=1 frees=1 live=0
+
+$ /tmp/tmp0s89nbj3/baseline 100 2 1
+Profile allocation failed
+memory-check: allocations=4 frees=4 live=0
+
+$ gcc -Wall -Wextra -Werror -O1 -g -fsanitize=address,undefined baseline.c -o /tmp/tmp0s89nbj3/baseline -lm
+
+$ /tmp/tmp0s89nbj3/baseline --self-test
+PASS: empty data, zero radius, inclusive radius and skill boundaries, unavailable and no-match cases
+
+$ /tmp/tmp0s89nbj3/baseline 10000 200 1
+{"version":"baseline","profiles":10000,"queries":200,"repeats":1,"setup_seconds":0.002850993,"search_seconds":0.025192367,"checksum":8122,"profile_bytes":400000,"profile_allocations":10000}
+
+$ gcc -Wall -Wextra -Wpedantic -Werror optimized.c -o /tmp/tmp0s89nbj3/optimized -lm
+
+$ /tmp/tmp0s89nbj3/optimized --self-test
+PASS: empty data, zero radius, inclusive radius and skill boundaries, unavailable and no-match cases
+
+$ /tmp/tmp0s89nbj3/optimized -1
+Usage: /tmp/tmp0s89nbj3/optimized [profiles [queries [repeats [--counts]]]] | --self-test
+
+$ /tmp/tmp0s89nbj3/optimized 2 0
+Usage: /tmp/tmp0s89nbj3/optimized [profiles [queries [repeats [--counts]]]] | --self-test
+
+$ /tmp/tmp0s89nbj3/optimized bogus
+Usage: /tmp/tmp0s89nbj3/optimized [profiles [queries [repeats [--counts]]]] | --self-test
+
+$ /tmp/tmp0s89nbj3/optimized 1 1 0
+Usage: /tmp/tmp0s89nbj3/optimized [profiles [queries [repeats [--counts]]]] | --self-test
+
+$ gcc -Wall -Wextra -Werror -O2 optimized.c memory_check.c -Wl,--wrap=malloc,--wrap=free -o /tmp/tmp0s89nbj3/optimized -lm
+
+$ /tmp/tmp0s89nbj3/optimized --self-test
+PASS: empty data, zero radius, inclusive radius and skill boundaries, unavailable and no-match cases
+memory-check: allocations=1 frees=1 live=0
+
+$ /tmp/tmp0s89nbj3/optimized 10000 200 1
+{"version":"optimized","profiles":10000,"queries":200,"repeats":1,"setup_seconds":0.000200804,"search_seconds":0.022277472,"checksum":8122,"profile_bytes":320000,"profile_allocations":1}
+memory-check: allocations=2 frees=2 live=0
+
+$ /tmp/tmp0s89nbj3/optimized 100 2 1
+queries: Success
+memory-check: allocations=0 frees=0 live=0
+
+$ /tmp/tmp0s89nbj3/optimized 100 2 1
+Profile allocation failed
+memory-check: allocations=1 frees=1 live=0
+
+$ gcc -Wall -Wextra -Werror -O1 -g -fsanitize=address,undefined optimized.c -o /tmp/tmp0s89nbj3/optimized -lm
+
+$ /tmp/tmp0s89nbj3/optimized --self-test
+PASS: empty data, zero radius, inclusive radius and skill boundaries, unavailable and no-match cases
+
+$ /tmp/tmp0s89nbj3/optimized 10000 200 1
+{"version":"optimized","profiles":10000,"queries":200,"repeats":1,"setup_seconds":0.000269376,"search_seconds":0.027475068,"checksum":8122,"profile_bytes":320000,"profile_allocations":1}
+
+LeakSanitizer detect_leaks=1 was attempted separately but is unsupported under this environment's tracing. Test-only malloc/free accounting confirms zero outstanding program allocations on success and injected-failure paths.

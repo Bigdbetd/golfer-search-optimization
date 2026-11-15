@@ -1,0 +1,7 @@
+{
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "compiler": "gcc (Debian 14.2.0-19) 14.2.0",
+  "flags": "-std=c11 -Wall -Wextra -Wpedantic -O2; link -lm",
+  "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+  "note": "Shared Linux execution environment. Fresh process per batch; two warm-up batches and ten measured batches; alternating order. CPU model is virtualized host reporting; scheduling and cache counters were not controlled. Metadata collection was repaired after lscpu failed; recorded benchmark samples were preserved."
+}
